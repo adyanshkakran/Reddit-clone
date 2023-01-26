@@ -1,27 +1,36 @@
 import '../App.css';
-import React from 'react';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
-// import Picture from './assets/login-pic.jpg'
+import { useQueryState } from '../Hooks/useQueryState';
 
 function Login() {
-  const [login, setLogin] = React.useState(true);
+  const [login, setLogin] = useQueryState('login');
 
   return (
-    <div className='mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8'>
-      <div className='mx-auto max-w-lg'>
-        <h1 className='text-center text-2xl font-bold text-indigo-600 sm:text-3xl'>
-          Welcome to Greddit!
-        </h1>
+    <section className='bg-white'>
+      <div className='lg:grid lg:min-h-screen lg:grid-cols-12'>
+        <section className='relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6'>
+          <img
+            alt='Night'
+            src='./src/assets/login-pic.jpg'
+            className='absolute inset-0 h-full w-full object-cover opacity-80'
+          />
 
-        <p className='mx-auto mt-4 max-w-md text-center text-gray-500'>
-          A place where you connect with people and share your thoughts, memes and everything in
-          between.
-        </p>
+          <div className='hidden lg:relative lg:block lg:p-12'>
+            <h2 className='mt-6 text-2xl font-bold text-white sm:text-3xl md:text-4xl'>
+              Welcome to Greddit!
+            </h2>
 
-        {login ? <LoginForm setLogin={setLogin} /> : <RegisterForm setLogin={setLogin} />}
+            <p className='mt-4 leading-relaxed text-white/90'>
+              A place where you can connect with people and share your thoughts, memes and
+              everything in between.
+            </p>
+          </div>
+        </section>
+
+        {login != 'false' ? <LoginForm setLogin={setLogin} /> : <RegisterForm setLogin={setLogin} />}
       </div>
-    </div>
+    </section>
   );
 }
 

@@ -1,209 +1,219 @@
+/* eslint-disable camelcase */
+import React from 'react';
+import axios from 'axios';
+
 type Props = {
-  setLogin: (login: boolean) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setLogin: any;
 };
 
 function RegisterForm(props: Props) {
-  function submitForm(event: React.MouseEvent<HTMLButtonElement>) {
+  function changeTab(event: React.MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
-    const formData = new FormData(document.getElementById('register-form') as HTMLFormElement);
-    console.log(formData);
+    props.setLogin('true');
   }
-  function changeTab(event: React.MouseEvent<HTMLButtonElement>) {
+
+  function onSubmit(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault();
-    props.setLogin(true);
+
+    const data = document.querySelector('#register');
+    const formData = new FormData(data as HTMLFormElement);
+    console.log(formData);
+    for (const data of formData.values()) {
+      if (!data) {
+        alert('Fill all fields of the Form');
+        return;
+      }
+    }
+    if (formData.get('password') !== formData.get('password_confirmation')) {
+      alert('Passwords do not match!');
+      return;
+    }
+    
+    axios
+    .post('http://www.localhost:3000/api/signup', formData, {
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+    })
+    .then((res) => {
+      console.log(res);
+      if (res.data == 'Email already exists') {
+        alert('Email already exists');
+      }
+    })
+    .catch((err) => console.log('err' + err));
   }
   return (
-    <form id="register-form" className='mt-6 mb-0 space-y-4 rounded-lg p-8 shadow-2xl'>
-      <div className='w-[114%]' style={{ translate: '-6% 0' }}>
-        <button className='bg-indigo-300 w-1/2 p-2 mb-2 text-white rounded-tl' onClick={changeTab}>
-          Login
-        </button>
-        <button className='bg-indigo-600 w-1/2 p-2 mb-2 text-white rounded-tr'>Register</button>
-      </div>
+    <main
+      aria-label='Main'
+      className='flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:py-12 lg:px-16 xl:col-span-6'
+    >
+      <div className='max-w-xl lg:max-w-3xl'>
+        <div className='relative -mt-16 block lg:hidden'>
+          <h1 className='mt-2 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl'>
+            Welcome to Greddit!
+          </h1>
 
-      <div className='columns-2'>
-        <div>
-          <label htmlFor='first-name' className='text-sm font-medium'>
-            First Name
-          </label>
-
-          <input
-            type='text'
-            id='first-name'
-            className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm'
-            placeholder='Enter First Name'
-          />
+          <p className='mt-4 leading-relaxed text-gray-500'>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi nam dolorum aliquam,
+            quibusdam aperiam voluptatum.
+          </p>
         </div>
-        <div>
-          <label htmlFor='last-name' className='text-sm font-medium'>
-            Last Name
-          </label>
 
-          <input
-            type='text'
-            id='last-name'
-            className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm'
-            placeholder='Enter Last Name'
-          />
-        </div>
-      </div>
+        <form
+          id='register'
+          className='mt-8 grid grid-cols-6 gap-6'
+        >
+          <div className='col-span-6 sm:col-span-3'>
+            <label htmlFor='FirstName' className='block text-sm font-medium text-gray-700'>
+              First Name
+            </label>
 
-      <div>
-        <label htmlFor='email' className='text-sm font-medium'>
-          Email
-        </label>
+            <input
+              type='text'
+              id='FirstName'
+              name='first_name'
+              className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
+            />
+          </div>
 
-        <div className='relative mt-1'>
-          <input
-            type='email'
-            id='email'
-            className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm'
-            placeholder='Enter email'
-          />
+          <div className='col-span-6 sm:col-span-3'>
+            <label htmlFor='LastName' className='block text-sm font-medium text-gray-700'>
+              Last Name
+            </label>
 
-          <span className='absolute inset-y-0 right-4 inline-flex items-center'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              className='h-5 w-5 text-gray-400'
-              fill='none'
-              viewBox='0 0 24 24'
-              stroke='currentColor'
+            <input
+              type='text'
+              id='LastName'
+              name='last_name'
+              className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
+            />
+          </div>
+
+          <div className='col-span-6'>
+            <label htmlFor='Username' className='block text-sm font-medium text-gray-700'>
+              User Name
+            </label>
+
+            <input
+              type='text'
+              id='username'
+              name='username'
+              className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
+            />
+          </div>
+
+          <div className='col-span-6'>
+            <label htmlFor='DateOfBirth' className='block text-sm font-medium text-gray-700'>
+              Date of Birth
+            </label>
+
+            <input
+              type='date'
+              id='dateofbirth'
+              name='date_of_birth'
+              className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
+            />
+          </div>
+
+          <div className='col-span-6'>
+            <label htmlFor='Email' className='block text-sm font-medium text-gray-700'>
+              Email
+            </label>
+
+            <input
+              type='email'
+              id='Email'
+              name='email'
+              className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
+            />
+          </div>
+
+          <div className='col-span-6'>
+            <label htmlFor='Contact' className='block text-sm font-medium text-gray-700'>
+              Contact Number
+            </label>
+
+            <input
+              type='text'
+              id='contact'
+              name='contact'
+              className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
+            />
+          </div>
+
+          <div className='col-span-6 sm:col-span-3'>
+            <label htmlFor='Password' className='block text-sm font-medium text-gray-700'>
+              Password
+            </label>
+
+            <input
+              type='password'
+              id='Password'
+              name='password'
+              className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
+            />
+          </div>
+
+          <div className='col-span-6 sm:col-span-3'>
+            <label
+              htmlFor='PasswordConfirmation'
+              className='block text-sm font-medium text-gray-700'
             >
-              <path
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='2'
-                d='M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207'
-              />
-            </svg>
-          </span>
-        </div>
-      </div>
+              Password Confirmation
+            </label>
 
-      <div>
-        <label htmlFor='username' className='text-sm font-medium'>
-          Username
-        </label>
-
-        <input
-          type='text'
-          id='username'
-          className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm'
-          placeholder='Enter Username'
-        />
-      </div>
-
-      <div>
-        <label htmlFor='contact-number' className='text-sm font-medium'>
-          Contact Number
-        </label>
-
-        <input
-          type='text'
-          id='contact-number'
-          className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm'
-          placeholder='Enter Contact Number (With Country Code)'
-        />
-      </div>
-      <div className='columns-2'>
-        <div>
-          <label htmlFor='password' className='text-sm font-medium'>
-            Password
-          </label>
-
-          <div className='relative mt-1'>
             <input
               type='password'
-              id='password'
-              className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm'
-              placeholder='Enter password'
+              id='PasswordConfirmation'
+              name='password_confirmation'
+              className='mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm'
             />
-
-            <span className='absolute inset-y-0 right-4 inline-flex items-center'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                className='h-5 w-5 text-gray-400'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
-                />
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
-                />
-              </svg>
-            </span>
           </div>
-        </div>
 
-        <div>
-          <label htmlFor='confirm-password' className='text-sm font-medium'>
-            Confirm Password
-          </label>
+          <div className='col-span-6'>
+            <p className='text-sm text-gray-500'>
+              By creating an account, you agree to our{' '}
+              <a href='#' className='text-gray-700 underline'>
+                terms and conditions
+              </a>{' '}
+              and{' '}
+              <a href='#' className='text-gray-700 underline'>
+                privacy policy
+              </a>
+              .
+            </p>
+          </div>
 
-          <div className='relative mt-1'>
+          <div className='col-span-6'>
             <input
-              type='password'
-              id='confirm-password'
-              className='w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm'
-              placeholder='Enter password again'
+              type='checkbox'
+              className='rounded border-gray-300 mr-3'
+              name='keep_me_logged_in'
             />
-
-            <span className='absolute inset-y-0 right-4 inline-flex items-center'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                className='h-5 w-5 text-gray-400'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke='currentColor'
-              >
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
-                />
-                <path
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth='2'
-                  d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
-                />
-              </svg>
-            </span>
+            <p className='text-md text-gray-700 inline'>Keep me Logged in</p>
           </div>
-        </div>
-      </div>
-      <div>
-        <p className='text-sm text-gray-500'>
-          By creating an account, you agree to our&nbsp;
-          <a href='#' className='text-gray-700 underline'>
-            terms and conditions
-          </a>
-          &nbsp;and&nbsp;
-          <a href='#' className='text-gray-700 underline'>
-            privacy policy
-          </a>
-          .
-        </p>
-      </div>
 
-      <button
-        type='submit'
-        className='block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white'
-        onClick={submitForm}
-      >
-        Create Account
-      </button>
-    </form>
+          <div className='col-span-6 sm:flex sm:items-center sm:gap-4'>
+            <button
+              type='submit'
+              onSubmit={onSubmit}
+              onClick={onSubmit}
+              className='inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
+            >
+              Create an account
+            </button>
+
+            <p className='mt-4 text-sm text-gray-500 sm:mt-0'>
+              Already have an account?{' '}
+              <a href='#' onClick={changeTab} className='text-gray-700 underline'>
+                Log in
+              </a>
+              .
+            </p>
+          </div>
+        </form>
+      </div>
+    </main>
   );
 }
 
