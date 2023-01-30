@@ -31,7 +31,7 @@ function RegisterForm(props: Props) {
     }
     
     axios
-    .post('http://www.localhost:3000/api/signup', formData, {
+    .post('https://reddit-clone-backend.onrender.com/api/signup', formData, {
       headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
     })
     .then((res) => {

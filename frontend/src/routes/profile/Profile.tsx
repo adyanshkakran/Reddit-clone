@@ -19,7 +19,7 @@ function Profile() {
     }
     axios
       .post(
-        'http://localhost:3000/api/checkLogin',
+        'https://reddit-clone-backend.onrender.com/api/checkLogin',
         { token },
         {
           headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },

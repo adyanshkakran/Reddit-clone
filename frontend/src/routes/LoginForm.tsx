@@ -37,7 +37,7 @@ function LoginForm(props: Props) {
     document.getElementById('all-fields')?.classList.add('hidden');
 
     axios
-      .post('http://www.localhost:3000/api/login', formData, {
+      .post('https://reddit-clone-backend.onrender.com/api/login', formData, {
         headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       })
       .then((res) => {
