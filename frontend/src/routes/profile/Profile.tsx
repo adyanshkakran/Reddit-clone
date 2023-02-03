@@ -13,7 +13,8 @@ function Profile() {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    const token = localStorage.getItem('token_greddit');
+    const token = localStorage.getItem('token_greddit') ?? sessionStorage.getItem('token_greddit');
+    console.log(token);
     if (!token) {
       navigate('/');
     }

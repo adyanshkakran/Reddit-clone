@@ -1,6 +1,5 @@
-const {Schema, model, default: mongoose} = require("mongoose");
+const { Schema } = require("mongoose");
 
-mongoose.set("strictQuery", false);
 const userSchema = new Schema({
   email: {
     type: String,
@@ -31,7 +30,24 @@ const userSchema = new Schema({
     type: Date,
     required: true,
   },
+  followers: {
+    required: true,
+    type: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "userModel",
+      },
+    ],
+  },
+  following: {
+    required: true,
+    type: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "userModel",
+      },
+    ],
+  },
 });
-let userModel = model("User", userSchema);
 
-module.exports = { userModel }
+module.exports = { userSchema };

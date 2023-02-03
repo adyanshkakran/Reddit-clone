@@ -184,15 +184,6 @@ function RegisterForm(props: Props) {
             </p>
           </div>
 
-          <div className='col-span-6'>
-            <input
-              type='checkbox'
-              className='rounded border-gray-300 mr-3'
-              name='keep_me_logged_in'
-            />
-            <p className='text-md text-gray-700 inline'>Keep me Logged in</p>
-          </div>
-
           <div className='col-span-6 sm:flex sm:items-center sm:gap-4'>
             <button
               type='submit'

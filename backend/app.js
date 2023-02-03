@@ -7,6 +7,7 @@ const cors = require("cors");
 const { config } = require("dotenv");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const { userSchema } = require("./schema");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -16,37 +17,6 @@ config();
 mongoose.set("strictQuery", false);
 mongoose.connect(process.env.DB_URI);
 
-const userSchema = new mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  username: {
-    type: String,
-    required: true,
-  },
-  Fname: {
-    type: String,
-    required: true,
-  },
-  Lname: {
-    type: String,
-    required: true,
-  },
-  contact: {
-    type: String,
-    required: true,
-  },
-  date_of_birth: {
-    type: Date,
-    required: true,
-  },
-});
 let userModel = mongoose.model("User", userSchema);
 
 // view engine setup
@@ -105,6 +75,8 @@ app.post("/api/signup", async (req, res) => {
     Lname: req.body.last_name,
     date_of_birth: req.body.date_of_birth,
     contact: req.body.contact,
+    followers: [],
+    following: [],
   });
   user.save((err, result) => {
     if (err){

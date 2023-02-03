@@ -23,7 +23,7 @@ function LoginForm(props: Props) {
     }
   }
 
-  function onSubmit(event: React.MouseEvent<HTMLButtonElement>) {
+  function onSubmit(event: React.MouseEvent<HTMLButtonElement> | React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const data = document.querySelector('#login');
@@ -35,6 +35,7 @@ function LoginForm(props: Props) {
       }
     }
     document.getElementById('all-fields')?.classList.add('hidden');
+    
 
     axios
       .post('https://reddit-clone-backend.onrender.com/api/login', formData, {
@@ -42,7 +43,13 @@ function LoginForm(props: Props) {
       })
       .then((res) => {
         if (res.status == 200) {
-          localStorage.setItem('token_greddit', res.data.token);
+          if(formData.get('keep_me_logged_in')) {
+            localStorage.setItem('token_greddit', res.data.token);
+            sessionStorage.removeItem('token_greddit');
+          }else{
+            sessionStorage.setItem('token_greddit', res.data.token);
+            localStorage.removeItem('token_greddit');
+          }
           navigate('/profile');
         } else if (res.status == 201) {
           showError(res.data);
@@ -67,7 +74,7 @@ function LoginForm(props: Props) {
           </p>
         </div>
 
-        <form id='login' className='mt-8 grid grid-cols-6 gap-6'>
+        <form id='login' className='mt-8 grid grid-cols-6 gap-6' onSubmit={onSubmit}>
           <div className='col-span-6'>
             <label htmlFor='Email' className='block text-sm font-medium text-gray-700'>
               Email
@@ -95,6 +102,15 @@ function LoginForm(props: Props) {
             />
           </div>
 
+          <div className='col-span-6 sm:flex sm:items-center sm:gap-4'>
+            <input
+              type='checkbox'
+              className='rounded border-gray-300 mr-3'
+              name='keep_me_logged_in'
+            />
+            <p className='text-sm text-gray-700 inline'>Keep me Logged in</p>
+          </div>
+
           <p id='all-fields' className='hidden col-span-6 text-red-700 text-sm'>
             Fill all fields of the form
           </p>
@@ -102,12 +118,12 @@ function LoginForm(props: Props) {
           <div className='col-span-6 sm:flex sm:items-center sm:gap-4'>
             <button
               type='submit'
-              onSubmit={onSubmit}
               onClick={onSubmit}
               className='block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500'
             >
               Log in
             </button>
+
             <p className='mt-4 text-sm text-gray-500 sm:mt-0'>
               No account?{' '}
               <a href='#' onClick={changeTab} className='text-gray-700 underline'>
