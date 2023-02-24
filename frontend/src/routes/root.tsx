@@ -2,6 +2,7 @@ import '../App.css';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import { useQueryState } from '../Hooks/useQueryState';
+import React from 'react';
 
 function Login() {
   const [login, setLogin] = useQueryState('login');

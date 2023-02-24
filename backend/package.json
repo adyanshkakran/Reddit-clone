@@ -3,8 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
-    "build": "node ./bin/www"
+    "start": "nodemon ./bin/www.js",
+    "build": "node ./bin/www.js",
+    "onedrive": "node onedrive.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -13,10 +14,12 @@
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
     "express": "~4.16.1",
+    "fs": "^0.0.1-security",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^6.8.4",
+    "multer": "^1.4.5-lts.1",
     "nodemon": "^2.0.20"
   }
 }
