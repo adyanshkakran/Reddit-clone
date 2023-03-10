@@ -1,8 +1,10 @@
 # Reddit clone
 
-To run the frontend server, run ```npm run dev``` in the frontend directory.
 
-The backend is hosted on Render.com and you do not need to run it on your local machine to run this project.
-* I have used JWTs to authenticate users and protect the routes for a machine who is not logged in.
-* The JWTs are initialized and authenticated in the Express backend.
-* Have used localStorage to implement `Keep User Logged in` functionality.
+This is a fully functioning Reddit-clone made for the course Design and Analysis of Software Systems - Spring 2023.
+
+To run the app, just install [docker](https://docs.docker.com/engine/install/) and [docker-compose](https://docs.docker.com/compose/install/) from the respective links. After successful installation, run the command `docker-compose up --build -d` to run the docker containers.
+
+Then navigate to `http://localhost:5000` to access the website.
+
+Technologies used- MongoDB, ExpressJS, React, NodeJS (MERN Stack).
