@@ -7,4 +7,4 @@ To run the app, just install [docker](https://docs.docker.com/engine/install/) a
 
 Then navigate to `http://localhost:5000` to access the website.
 
-Technologies used- MongoDB, ExpressJS, React, NodeJS (MERN Stack).
+Technologies used- MongoDB, ExpressJS, React, NodeJS (MERN Stack), nginx.
