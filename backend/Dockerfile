@@ -15,4 +15,4 @@ COPY . .
 # Exports
 EXPOSE 3050
 
-CMD ["npm","start"]
+CMD ["npm","run","build"]

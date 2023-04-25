@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www.js",
-    "build": "node ./bin/www.js",
-    "onedrive": "node onedrive.js"
+    "build": "node ./bin/www.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
